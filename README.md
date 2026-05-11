@@ -1,27 +1,29 @@
-# ASK & FSK
+# Experimental verification of ASK & FSK
 # Aim
 Write a simple Python program for the modulation and demodulation of ASK and FSK.
 # Tools required
-```
-Tools Required
-Google Colab
-Python
-NumPy Library
-Matplotlib Library
-Internet Connection
-Computer / Laptop
-# Program
-```
-# Program
-```
+- Google Colab
+- Python
+- Numpy script
+- computer/ Laptop
+# Theory
+Amplitude Shift Keying (ASK)
+
+Amplitude Shift Keying (ASK) is a digital modulation technique in which the amplitude of the carrier signal is varied according to the binary input data while the frequency and phase remain constant. In this method, a carrier signal is transmitted for binary ‘1’ and reduced or removed for binary ‘0’. ASK is simple to implement and is commonly used in low-cost communication systems, but it is more sensitive to noise and interference.
+
+Frequency Shift Keying (FSK)
+
+Frequency Shift Keying (FSK) is a digital modulation technique in which the frequency of the carrier signal is changed according to the binary input data while amplitude remains constant. One frequency is used to represent binary ‘1’ and another frequency is used to represent binary ‘0’. FSK has better noise immunity and reliability compared to ASK, making it suitable for digital communication and wireless transmission systems.
+# ASK Program
+```python
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import butter, lfilter
 
 # Low-pass filter
 def lpf(x, fc, fs):
-    b, a = butter(4, fc/(0.5*fs), 'low')
-    return lfilter(b, a, x)
+    b, a = butter(4, fc/(0.5*fs), 'low')
+    return lfilter(b, a, x)
 
 # Parameters
 fs, fc, br, T = 1000, 50, 10, 1
@@ -41,8 +43,8 @@ decoded = (demod[::fs//br] > 0.25).astype(int)
 
 # Plot
 plt.figure(figsize=(10,9))
-plt.suptitle("NAME : AKSHAYA LAKSHMI V\nREG NO : 212224060014",
-             fontsize=12, fontweight='bold')    
+plt.suptitle("NAME : NAVEEN K\nREG NO : 212223060184",
+             fontsize=12, fontweight='bold')
 
 plt.subplot(4,1,1)
 plt.plot(t, msg)
@@ -63,20 +65,20 @@ plt.title("Decoded Bits")
 plt.tight_layout(rect=[0,0,1,0.93])
 plt.show()
 
+```
+# Output Waveform for ASK
+<img width="1133" height="926" alt="image" src="https://github.com/user-attachments/assets/9eba84d7-3d97-4757-80e8-acdec204b55e" />
 
-
-
-
-FSK PROGRAM
-
+# FSK Program
+```python
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import butter, lfilter
 
 # Low-pass filter
 def lpf(x, fc, fs):
-    b, a = butter(4, fc/(0.5*fs), 'low')
-    return lfilter(b, a, x)
+    b, a = butter(4, fc/(0.5*fs), 'low')
+    return lfilter(b, a, x)
 
 # Parameters
 fs, f1, f2, br, T = 1000, 30, 70, 10, 1
@@ -94,20 +96,20 @@ c2 = np.sin(2*np.pi*f2*t)
 # FSK Modulation
 fsk = np.zeros_like(t)
 for i, b in enumerate(bits):
-    fsk[i*bd:(i+1)*bd] = np.sin(2*np.pi*(f2 if b else f1)*t[i*bd:(i+1)*bd])
+    fsk[i*bd:(i+1)*bd] = np.sin(2*np.pi*(f2 if b else f1)*t[i*bd:(i+1)*bd])
 
 # Demodulation (correlation)
 d1 = lpf(fsk * c1, f1, fs)
 d2 = lpf(fsk * c2, f2, fs)
 
 dec = [(np.sum(d2[i*bd:(i+1)*bd]**2) >
-        np.sum(d1[i*bd:(i+1)*bd]**2)) for i in range(br)]
+        np.sum(d1[i*bd:(i+1)*bd]**2)) for i in range(br)]
 demod = np.repeat(dec, bd)
 
 # Plot
 plt.figure(figsize=(10,10))
-plt.suptitle("NAME : AKSHAYA LAKSHMI V\nREG NO : 212224060014",
-             fontsize=12, fontweight='bold')   
+plt.suptitle("NAME : NAVEEN K\nREG NO : 212223060184",
+             fontsize=12, fontweight='bold') 
 
 plt.subplot(5,1,1); plt.plot(t, msg); plt.title("Message Signal")
 plt.subplot(5,1,2); plt.plot(t, c1); plt.title("Carrier f1 (bit 0)")
@@ -117,11 +119,13 @@ plt.subplot(5,1,5); plt.plot(t, demod); plt.title("Demodulated Signal")
 
 plt.tight_layout(rect=[0,0,1,0.93])
 plt.show()
+
 ```
- # Output waveform
-<img width="735" height="658" alt="image" src="https://github.com/user-attachments/assets/720f8025-2ee3-46e8-9bec-730b8d0b9c0a" />
 
- <img width="718" height="737" alt="image" src="https://github.com/user-attachments/assets/9c47496d-d6d7-4fd9-95e0-3344b1bd4017" />
+# Output Waveform for FSK
+<img width="1030" height="936" alt="image" src="https://github.com/user-attachments/assets/08608302-557c-4fca-b820-8604c0f24206" />
 
- # Results
-Thus the Amplitude Shift Keying (ASK) and Frequency-shift keying (FSK) performed using python.
+
+
+# Results
+ The experiment of modulation and demodulation of ASK and FSK was successfully executed.
